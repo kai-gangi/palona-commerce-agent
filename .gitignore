@@ -29,6 +29,5 @@ Thumbs.db
 # Logs
 *.log
 
-# Model cache
-models/
+# Cache
 .cache/
