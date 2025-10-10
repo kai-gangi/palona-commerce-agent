@@ -26,10 +26,6 @@ Attributes:
 import subprocess
 import sys
 from pathlib import Path
-
-project_root = Path(__file__).parent.parent
-sys.path.insert(0, str(project_root))
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.config import get_settings
