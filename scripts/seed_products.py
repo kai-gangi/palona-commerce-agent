@@ -1,0 +1,131 @@
+"""
+Generate sample product catalog.
+This creates a products.json file with sample e-commerce data.
+"""
+import json
+from pathlib import Path
+
+SAMPLE_PRODUCTS = [
+    {
+        "id": "prod_001",
+        "name": "Athletic Performance T-Shirt",
+        "category": "clothing",
+        "description": "Moisture-wicking fabric designed for intense workouts. Features breathable mesh panels and anti-odor technology. Perfect for running, gym, or any high-intensity activity.",
+        "price": 29.99,
+        "image_path": "data/product_images/prod_001.jpg",
+        "tags": ["sports", "men", "fitness", "athletic wear"]
+    },
+    {
+        "id": "prod_002",
+        "name": "Yoga Mat Premium",
+        "category": "fitness",
+        "description": "6mm thick eco-friendly yoga mat with non-slip surface. Extra cushioning for joints. Includes carrying strap. Perfect for yoga, pilates, and floor exercises.",
+        "price": 39.99,
+        "image_path": "data/product_images/prod_002.jpg",
+        "tags": ["yoga", "fitness", "exercise", "wellness"]
+    },
+    {
+        "id": "prod_003",
+        "name": "Wireless Bluetooth Earbuds",
+        "category": "electronics",
+        "description": "True wireless earbuds with active noise cancellation. 8-hour battery life, sweat-resistant design. Crystal clear audio quality for music and calls.",
+        "price": 79.99,
+        "image_path": "data/product_images/prod_003.jpg",
+        "tags": ["electronics", "audio", "wireless", "music"]
+    },
+    {
+        "id": "prod_004",
+        "name": "Stainless Steel Water Bottle",
+        "category": "accessories",
+        "description": "32oz insulated water bottle keeps drinks cold for 24 hours or hot for 12 hours. Leak-proof lid, BPA-free. Perfect for gym, hiking, or daily use.",
+        "price": 24.99,
+        "image_path": "data/product_images/prod_004.jpg",
+        "tags": ["hydration", "fitness", "eco-friendly", "outdoor"]
+    },
+    {
+        "id": "prod_005",
+        "name": "Running Shoes - Trail Edition",
+        "category": "footwear",
+        "description": "Lightweight trail running shoes with superior grip and ankle support. Waterproof membrane and reinforced toe cap. Ideal for off-road running and hiking.",
+        "price": 119.99,
+        "image_path": "data/product_images/prod_005.jpg",
+        "tags": ["shoes", "running", "outdoor", "sports"]
+    },
+    {
+        "id": "prod_006",
+        "name": "Gym Duffel Bag",
+        "category": "accessories",
+        "description": "Spacious gym bag with separate shoe compartment and water-resistant fabric. Multiple pockets for organization. Adjustable shoulder strap and carry handles.",
+        "price": 44.99,
+        "image_path": "data/product_images/prod_006.jpg",
+        "tags": ["gym", "bag", "fitness", "storage"]
+    },
+    {
+        "id": "prod_007",
+        "name": "Resistance Bands Set",
+        "category": "fitness",
+        "description": "Set of 5 resistance bands with varying resistance levels. Includes door anchor and carrying case. Perfect for home workouts and strength training.",
+        "price": 19.99,
+        "image_path": "data/product_images/prod_007.jpg",
+        "tags": ["fitness", "strength training", "home workout", "resistance"]
+    },
+    {
+        "id": "prod_008",
+        "name": "Smart Fitness Watch",
+        "category": "electronics",
+        "description": "Advanced fitness tracker with heart rate monitor, GPS, and sleep tracking. 7-day battery life. Tracks multiple sports modes and provides detailed analytics.",
+        "price": 199.99,
+        "image_path": "data/product_images/prod_008.jpg",
+        "tags": ["electronics", "fitness", "smartwatch", "health"]
+    },
+    {
+        "id": "prod_009",
+        "name": "Protein Shaker Bottle",
+        "category": "accessories",
+        "description": "BPA-free shaker bottle with built-in mixing ball. 28oz capacity with measurement markings. Leak-proof lid and wide mouth for easy cleaning.",
+        "price": 12.99,
+        "image_path": "data/product_images/prod_009.jpg",
+        "tags": ["fitness", "nutrition", "shaker", "protein"]
+    },
+    {
+        "id": "prod_010",
+        "name": "Compression Leggings",
+        "category": "clothing",
+        "description": "High-waisted compression leggings with four-way stretch. Moisture-wicking and squat-proof fabric. Side pocket for phone. Perfect for yoga, running, or gym.",
+        "price": 49.99,
+        "image_path": "data/product_images/prod_010.jpg",
+        "tags": ["women", "leggings", "fitness", "athletic wear"]
+    },
+    {
+        "id": "prod_011",
+        "name": "Foam Roller",
+        "category": "fitness",
+        "description": "High-density foam roller for muscle recovery and myofascial release. 18 inches long. Helps reduce muscle soreness and improve flexibility.",
+        "price": 24.99,
+        "image_path": "data/product_images/prod_011.jpg",
+        "tags": ["recovery", "fitness", "massage", "flexibility"]
+    },
+    {
+        "id": "prod_012",
+        "name": "Cotton Casual T-Shirt",
+        "category": "clothing",
+        "description": "100% organic cotton t-shirt with relaxed fit. Soft, breathable fabric perfect for everyday wear. Available in multiple colors.",
+        "price": 19.99,
+        "image_path": "data/product_images/prod_012.jpg",
+        "tags": ["casual", "cotton", "everyday", "basics"]
+    }
+]
+
+def create_sample_products():
+    """Create products.json with sample data"""
+    Path("data").mkdir(exist_ok=True)
+    
+    with open("data/products.json", 'w') as f:
+        json.dump(SAMPLE_PRODUCTS, f, indent=2)
+    
+    print(f"✓ Created products.json with {len(SAMPLE_PRODUCTS)} sample products")
+    print("\nNote: You'll need to add actual product images to data/product_images/")
+    print("Image files should be named: prod_001.jpg, prod_002.jpg, etc.")
+
+if __name__ == "__main__":
+    create_sample_products()
