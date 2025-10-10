@@ -235,7 +235,7 @@ with chat_container:
                                 try:
                                     img = Image.open(product["image_path"])
                                     img = img.resize((200, 200), Image.Resampling.LANCZOS)
-                                    st.image(img, width="stretch")
+                                    st.image(img, width=200)
                                 except:
                                     st.info("📦 Product Image")
                                 
