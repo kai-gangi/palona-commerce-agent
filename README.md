@@ -11,15 +11,28 @@ An intelligent shopping assistant that handles conversation, text-based product 
 - Image-based product search using visual similarity
 
 ## Architecture
+
+```
 User → FastAPI → LLM Agent (GPT-4o-mini) → Tools
-↓
-┌──────────┼──────────┐
-↓          ↓          ↓
-Chat    Text Search  Image Search
-↓          ↓
-Embeddings  CLIP
-↓          ↓
-ChromaDB Vector Store
+                           ↓
+        ┌─────────────────────────────────────┐
+        ↓                     ↓               ↓
+      Chat              Text Search    Image Search
+                            ↓               ↓
+                       Embeddings        CLIP
+                            ↓               ↓
+                      ChromaDB Vector Store
+```
+
+**Flow:**
+1. **User** sends request via Streamlit UI
+2. **FastAPI** receives and routes the request  
+3. **LLM Agent** (GPT-4o-mini) decides which tool to use
+4. **Tools** execute specific functions:
+   - **Chat**: Direct conversation 
+   - **Text Search**: Semantic search using embeddings
+   - **Image Search**: Visual similarity using CLIP
+5. **Vector Store** (ChromaDB) returns relevant products
 
 ## Tech Stack Decisions
 
