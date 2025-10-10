@@ -2,7 +2,6 @@
 
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
-from typing import Optional
 import logging
 import json
 

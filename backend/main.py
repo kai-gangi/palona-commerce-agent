@@ -93,6 +93,7 @@ def create_app() -> FastAPI:
     
     return app
 
+setup_data()
 app = create_app()
 
 @app.get("/")
