@@ -117,36 +117,15 @@ def send_message_to_api(message: str, history: list, image_data: str = None):
                                 st.session_state.messages[-1]["content"] = full_response
                                 message_placeholder.markdown(full_response)
                                 
-                                # Add products if present
+                                # ONLY store products in session state, don't display here
                                 if chunk.get("products"):
                                     st.session_state.messages[-1]["products"] = chunk["products"]
-                                    
-                                    st.divider()
-                                    st.subheader("🛒 Products Found:")
-                                    
-                                    # Display products in grid
-                                    products = chunk["products"]
-                                    for i in range(0, len(products), 3):
-                                        cols = st.columns(3)
-                                        for idx, product in enumerate(products[i:i+3]):
-                                            with cols[idx]:
-                                                with st.container(border=True):
-                                                    try:
-                                                        img = Image.open(product["image_path"])
-                                                        st.image(img, width=300)
-                                                    except:
-                                                        st.info("📦 Product Image")
-                                                    
-                                                    st.markdown(f"**{product['name']}**")
-                                                    st.markdown(f"💰 ${product['price']}")
-                                                    st.caption(f"Category: {product['category']}")
-                                                    
-                                                    with st.expander("View Details"):
-                                                        st.write(product['description'])
-                                                        st.write(f"**Tags:** {', '.join(product['tags'])}")
+                                
+                                # Force rerun to display products in chat history
+                                st.rerun()
                             
                             elif chunk["type"] == "error":
-                                st.error(chunk["content"])
+                                message_placeholder.error(chunk["content"])
                                 break
                                 
                         except json.JSONDecodeError:
