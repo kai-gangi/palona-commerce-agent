@@ -257,7 +257,7 @@ if prompt := st.chat_input("Ask me anything about products..."):
     # Get image data if image is uploaded
     image_data = None
     if st.session_state.get("uploaded_image"):
-        image = Image.open(st.session_state.uploaded_image, width=300, caption="Attached image")
+        image = Image.open(st.session_state.uploaded_image)
         buffered = io.BytesIO()
         image.save(buffered, format="PNG")
         image_data = base64.b64encode(buffered.getvalue()).decode()
@@ -270,7 +270,7 @@ if prompt := st.chat_input("Ask me anything about products..."):
     with st.chat_message("user"):
         st.markdown(prompt)
         if st.session_state.get("uploaded_image"):
-            st.image(st.session_state.uploaded_image, use_container_width=True, caption="Attached image")
+            st.image(st.session_state.uploaded_image, width=300, caption="Attached image")
     
     # Prepare history (exclude current message and products)
     history = [
