@@ -22,5 +22,5 @@ pydantic-settings==2.1.0
 numpy==1.26.2
 
 # Streamlit (for frontend)
-streamlit==1.50.2
+streamlit==1.50.0
 requests==2.31.0
