@@ -43,9 +43,9 @@ User → FastAPI → LLM Agent (GPT-4o-mini) → Tools
 - **Other Options**: Flask (not suitable because of synchronous operations), Django (too heavy for small API layer)
 
 ### LLM: OpenAI GPT-4o-mini
--Fast (~500ms) for real-time chat
--Cost-effective ($0.15/1M tokens, about 6x cheaper as GPT-4o)
--Excellent function calling
+- Fast (~500ms) for real-time chat
+- Cost-effective ($0.15/1M tokens, about 6x cheaper than GPT-4o)
+- Excellent function calling
 
 ### Embeddings: OpenAI text-embedding-3-small
 - Strong semantic understanding
