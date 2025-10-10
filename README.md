@@ -75,7 +75,7 @@ pip install -r requirements.txt
 export OPENAI_API_KEY="your-api-key-here"
 
 # Run (2 terminals)
-python backend/main.py              # Terminal 1: API on :8000
+python -m backend.main              # Terminal 1: API on :8000
 streamlit run streamlit_app/app.py  # Terminal 2: UI on :8501
 ```
 

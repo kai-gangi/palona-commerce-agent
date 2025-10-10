@@ -23,6 +23,10 @@ Attributes:
     settings (Settings): Application configuration settings.
 """
 
+import os
+import subprocess
+import sys
+from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.config import get_settings
@@ -30,6 +34,37 @@ from backend.api.routes import chat, health
 import uvicorn
 
 settings = get_settings()
+
+def setup_data():
+    """Initialize data by running setup scripts if needed."""
+    try:
+        products_file = Path("data/products.json")
+        vector_db_path = Path("data/vector_store")
+        
+        if products_file.exists() and vector_db_path.exists():
+            print("Data already initialized, skipping setup...")
+            return
+                    
+        result = subprocess.run([
+            sys.executable, "scripts/seed_products.py"
+        ], capture_output=True, text=True, cwd=Path.cwd())
+        
+        if result.returncode != 0:
+            print(f"Error seeding products: {result.stderr}")
+            return
+            
+        result = subprocess.run([
+            sys.executable, "scripts/setup_data.py"
+        ], capture_output=True, text=True, cwd=Path.cwd())
+        
+        if result.returncode != 0:
+            print(f"Error setting up data: {result.stderr}")
+            return
+            
+        print("Data setup completed successfully!")
+        
+    except Exception as e:
+        print(f"Error during data setup: {e}")
 
 def create_app() -> FastAPI:
     """Create and configure the FastAPI application.
