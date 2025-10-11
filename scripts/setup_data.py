@@ -37,6 +37,11 @@ Note:
 import json
 import os
 from pathlib import Path
+import sys
+
+project_root = Path(__file__).parent.parent.absolute()
+sys.path.insert(0, str(project_root))
+
 from backend.services.embedding_service import EmbeddingService
 from backend.services.image_service import ImageService
 from backend.services.vector_store import VectorStore
@@ -98,7 +103,7 @@ def setup_text_embeddings(products):
     vector_store = VectorStore()
     vector_store.add_products_text(products, embeddings)
     
-    print(f"✓ Created text embeddings for {len(products)} products")
+    print(f"Created text embeddings for {len(products)} products")
 
 def setup_image_embeddings(products):
     """Create and store image embeddings for all products"""
@@ -123,7 +128,7 @@ def setup_image_embeddings(products):
     if valid_products:
         vector_store = VectorStore()
         vector_store.add_products_images(valid_products, embeddings)
-        print(f"✓ Created image embeddings for {len(valid_products)} products")
+        print(f"Created image embeddings for {len(valid_products)} products")
     else:
         print("No valid product images found")
 

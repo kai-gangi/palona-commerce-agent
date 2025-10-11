@@ -4,6 +4,10 @@ This creates a products.json file with sample e-commerce data.
 """
 import json
 from pathlib import Path
+import sys
+
+project_root = Path(__file__).parent.parent.absolute()
+sys.path.insert(0, str(project_root))
 
 SAMPLE_PRODUCTS = [
     {
