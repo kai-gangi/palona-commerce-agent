@@ -12,10 +12,6 @@ ENV/
 # Environment
 .env
 
-# Data
-data/vector_db/
-*.db
-
 # IDE
 .vscode/
 .idea/

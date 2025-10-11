@@ -81,14 +81,12 @@ if "processing_image_search" not in st.session_state:
 def send_message_to_api(message: str, history: list, image_data: str = None):
     """Centralized function to handle streaming API calls."""
     try:
-        # Create placeholder for loading/streaming response
         assistant_message = {
             "role": "assistant",
             "content": ""
         }
         st.session_state.messages.append(assistant_message)
         
-        # Create container for loading and streaming content
         with st.chat_message("assistant"):
             message_placeholder = st.empty()
             message_placeholder.markdown("🤔 Thinking...")
@@ -107,7 +105,6 @@ def send_message_to_api(message: str, history: list, image_data: str = None):
         if response.status_code == 200:
             full_response = ""
             
-            # Process streaming response
             for line in response.iter_lines():
                 if line:
                     line = line.decode('utf-8')
@@ -125,7 +122,6 @@ def send_message_to_api(message: str, history: list, image_data: str = None):
                                 message_placeholder.markdown(full_response + "▌")
                             
                             elif chunk["type"] == "complete":
-                                # Update the stored message
                                 st.session_state.messages[-1]["content"] = full_response
                                 message_placeholder.markdown(full_response)
                                 
@@ -177,7 +173,6 @@ with st.sidebar:
     
     st.divider()
     
-    # Image upload section
     st.header("🖼️ Image Search")
     uploaded_file = st.file_uploader(
         "Upload an image to find similar products",

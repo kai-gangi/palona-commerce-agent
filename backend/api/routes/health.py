@@ -35,10 +35,8 @@ async def health_check():
         except ImportError:
             services_ok = False
         
-        # Calculate response time
         response_time = int((time.time() - start_time) * 1000)
         
-        # Determine status
         if config_ok and services_ok:
             return {
                 "status": "healthy",
@@ -50,7 +48,6 @@ async def health_check():
                 }
             }
         else:
-            # Return 503 if critical issues found
             raise HTTPException(
                 status_code=503,
                 detail={
@@ -67,7 +64,6 @@ async def health_check():
     except HTTPException:
         raise
     except Exception as e:
-        # Catch any unexpected errors
         response_time = int((time.time() - start_time) * 1000)
         raise HTTPException(
             status_code=503,
