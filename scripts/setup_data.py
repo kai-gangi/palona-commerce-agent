@@ -148,7 +148,7 @@ def main():
     setup_image_embeddings(products)
     
     print("\n" + "=" * 50)
-    print("✓ Setup complete! Ready to start the application.")
+    print("Setup complete! Ready to start the application.")
     print("=" * 50)
 
 if __name__ == "__main__":
