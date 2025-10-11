@@ -45,6 +45,19 @@ st.set_page_config(
     layout="wide"
 )
 
+st.markdown("""
+<style>
+/* Fix small circular product images inside containers */
+[data-testid="stImage"] img {
+    border-radius: 0px !important;  /* remove circular corners */
+    object-fit: cover !important;   /* scale to fill container */
+    width: 100% !important;         /* fill card width */
+    height: auto !important;        /* keep aspect ratio */
+    max-height: 250px !important;   /* optional: control vertical size */
+}
+</style>
+""", unsafe_allow_html=True)
+
 # Initialize session state
 if "messages" not in st.session_state:
     st.session_state.messages = [
