@@ -93,10 +93,13 @@ def create_app() -> FastAPI:
 
     app.include_router(chat.router, prefix="/api")
     app.include_router(health.router, prefix="/api")
+
+    @app.on_event("startup")
+    async def startup_event():
+        setup_data()
     
     return app
 
-setup_data()
 app = create_app()
 
 @app.get("/")
