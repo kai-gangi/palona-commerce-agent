@@ -207,7 +207,7 @@ curl -X POST "http://localhost:8000/chat" \
 **Local Development:**
 ```bash
 # Start the server
-uvicorn backend.main:app --reload
+python -m backend.main
 
 # Server runs on http://localhost:8000
 # API docs available at http://localhost:8000/docs
