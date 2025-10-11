@@ -93,10 +93,6 @@ def create_app() -> FastAPI:
 
     app.include_router(chat.router, prefix="/api")
     app.include_router(health.router, prefix="/api")
-
-    @app.on_event("startup")
-    async def startup_event():
-        setup_data()
     
     return app
 
@@ -115,4 +111,5 @@ async def root():
     }
 
 if __name__ == "__main__":
+    setup_data()
     uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)
