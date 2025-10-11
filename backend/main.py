@@ -11,11 +11,7 @@ The server provides endpoints for:
     - Health checks and API status
 
 Example:
-    Run the server using uvicorn:
-        $ uvicorn backend.main:app --reload
-        
-    Or run directly:
-        $ python -m backend.main
+    $ python backend/main.py
 
 Attributes:
     app (FastAPI): The main FastAPI application instance.
@@ -37,13 +33,18 @@ settings = get_settings()
 def setup_data():
     """Initialize data by running setup scripts if needed."""
     try:
+        print("Starting Data Setup...")
+        print("==================================================")  
+
         products_file = Path("data/products.json")
         vector_db_path = Path("data/vector_store")
         
         if products_file.exists() and vector_db_path.exists():
             print("Data already initialized, skipping setup...")
             return
-                    
+
+        print("Setting up AI Commerce Agent Data")
+        print("==================================================")  
         result = subprocess.run([
             sys.executable, "scripts/seed_products.py"
         ], capture_output=True, text=True, cwd=Path.cwd())
@@ -51,7 +52,8 @@ def setup_data():
         if result.returncode != 0:
             print(f"Error seeding products: {result.stderr}")
             return
-            
+        print("Creating vector store with product embeddings...")
+        print("==================================================")
         result = subprocess.run([
             sys.executable, "scripts/setup_data.py"
         ], capture_output=True, text=True, cwd=Path.cwd())
@@ -61,6 +63,7 @@ def setup_data():
             return
             
         print("Data setup completed successfully!")
+        print("")
         
     except Exception as e:
         print(f"Error during data setup: {e}")

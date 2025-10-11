@@ -45,6 +45,16 @@ st.set_page_config(
     layout="wide"
 )
 
+st.markdown("""
+<style>
+[data-testid="stChatMessage"] [data-testid="stImage"] img {
+    width: 100% !important;
+    height: auto !important;
+    border-radius: 0px !important;
+    object-fit: cover !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 
 # Initialize session state
@@ -123,7 +133,6 @@ def send_message_to_api(message: str, history: list, image_data: str = None):
                                 if chunk.get("products"):
                                     st.session_state.messages[-1]["products"] = chunk["products"]
                                 
-                                # Force rerun to display products in chat history
                                 st.rerun()
                             
                             elif chunk["type"] == "error":
@@ -133,7 +142,6 @@ def send_message_to_api(message: str, history: list, image_data: str = None):
                         except json.JSONDecodeError:
                             continue
             
-            # Clear the uploaded image
             if "uploaded_image" in st.session_state:
                 st.session_state.uploaded_image = None
             
@@ -179,11 +187,10 @@ with st.sidebar:
     
     if uploaded_file:
         st.session_state.uploaded_image = uploaded_file
-        st.image(uploaded_file, caption="Uploaded Image", use_container_width=True)
+        st.image(uploaded_file, caption="Uploaded Image", width="stretch")
         st.success("✅ Image attached! Type a message or click 'Search by Image'")
 
-        if st.button("🔍 Search by Image", use_container_width=True):
-            # Convert image to base64
+        if st.button("🔍 Search by Image", width="stretch"):
             image = Image.open(uploaded_file)
             buffered = io.BytesIO()
             image.save(buffered, format="PNG")
@@ -194,24 +201,20 @@ with st.sidebar:
                 "role": "user",
                 "content": "Find products similar to this image",
                 "image": img_str,
-                "image_file": uploaded_file  # Store for display
+                "image_file": uploaded_file  
             }
             st.session_state.messages.append(user_message)
             st.session_state.processing_image_search = True
-            
-            # Trigger rerun to show the message in main chat and process streaming
             st.rerun()
 
     st.divider()
     
-    # Clear chat button
-    if st.button("🗑️ Clear Chat", use_container_width=True):
+    if st.button("🗑️ Clear Chat", width="stretch"):
         st.session_state.messages = [st.session_state.messages[0]]  # Keep welcome message
         if "uploaded_image" in st.session_state:
             st.session_state.uploaded_image = None
         st.rerun()
 
-# Chat history display
 chat_container = st.container()
 
 with chat_container:
@@ -229,7 +232,6 @@ with chat_container:
                     st.divider()
                     st.subheader("🛒 Products Found:")
                     
-                    # Display products in grid
                     for i in range(0, len(message["products"]), 3):
                         cols = st.columns(3)
                         for idx, product in enumerate(message["products"][i:i+3]):
@@ -237,7 +239,7 @@ with chat_container:
                                 with st.container(border=True):
                                     try:
                                         img = Image.open(product["image_path"])
-                                        st.image(img, use_container_width=True)
+                                        st.image(img, width="stretch")
                                     except:
                                         st.info("📦 Product Image")
                                     
@@ -251,13 +253,11 @@ with chat_container:
 
 # Chat input
 if prompt := st.chat_input("Ask me anything about products..."):
-    # Prepare user message
     user_message = {
         "role": "user",
         "content": prompt
     }
     
-    # Get image data if image is uploaded
     image_data = None
     if st.session_state.get("uploaded_image"):
         image = Image.open(st.session_state.uploaded_image)
@@ -269,20 +269,17 @@ if prompt := st.chat_input("Ask me anything about products..."):
     
     st.session_state.messages.append(user_message)
     
-    # Display user message immediately
     with st.chat_message("user"):
         st.markdown(prompt)
         if st.session_state.get("uploaded_image"):
             st.image(st.session_state.uploaded_image, width=300, caption="Attached image")
     
-    # Prepare history (exclude current message and products)
     history = [
         {"role": msg["role"], "content": msg["content"]}
         for msg in st.session_state.messages[:-1]  
         if "products" not in msg  
     ]
     
-    # Call streaming API
     send_message_to_api(prompt, history, image_data)
 
 # Check if we need to process an image search from the sidebar button
@@ -297,7 +294,6 @@ if (st.session_state.get("processing_image_search", False) and
         # Reset the flag to prevent duplicate processing
         st.session_state.processing_image_search = False
         
-        # Prepare history and call streaming API
         history = [
             {"role": msg["role"], "content": msg["content"]}
             for msg in st.session_state.messages[:-1]  
