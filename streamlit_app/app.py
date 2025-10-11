@@ -45,18 +45,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.markdown("""
-<style>
-/* Fix small circular product images inside containers */
-[data-testid="stImage"] img {
-    border-radius: 0px !important;  /* remove circular corners */
-    object-fit: cover !important;   /* scale to fill container */
-    width: 100% !important;         /* fill card width */
-    height: auto !important;        /* keep aspect ratio */
-    max-height: 250px !important;   /* optional: control vertical size */
-}
-</style>
-""", unsafe_allow_html=True)
+
 
 # Initialize session state
 if "messages" not in st.session_state:
@@ -234,30 +223,31 @@ with chat_container:
             if "image_file" in message:
                 st.image(message["image_file"], width=200, caption="Attached image")
             
-            # Display products if present
-            if "products" in message and message["products"]:
-                st.divider()
-                st.subheader("🛒 Products Found:")
-                
-                # Display products in grid
-                for i in range(0, len(message["products"]), 3):
-                    cols = st.columns(3)
-                    for idx, product in enumerate(message["products"][i:i+3]):
-                        with cols[idx]:
-                            with st.container(border=True):
-                                try:
-                                    img = Image.open(product["image_path"])
-                                    st.image(img, use_container_width=True)
-                                except:
-                                    st.info("📦 Product Image")
-                                
-                                st.markdown(f"**{product['name']}**")
-                                st.markdown(f"💰 ${product['price']}")
-                                st.caption(f"Category: {product['category']}")
-                                
-                                with st.expander("View Details"):
-                                    st.write(product['description'])
-                                    st.write(f"**Tags:** {', '.join(product['tags'])}")
+            with st.container():
+                # Display products if present
+                if "products" in message and message["products"]:
+                    st.divider()
+                    st.subheader("🛒 Products Found:")
+                    
+                    # Display products in grid
+                    for i in range(0, len(message["products"]), 3):
+                        cols = st.columns(3)
+                        for idx, product in enumerate(message["products"][i:i+3]):
+                            with cols[idx]:
+                                with st.container(border=True):
+                                    try:
+                                        img = Image.open(product["image_path"])
+                                        st.image(img, use_container_width=True)
+                                    except:
+                                        st.info("📦 Product Image")
+                                    
+                                    st.markdown(f"**{product['name']}**")
+                                    st.markdown(f"💰 ${product['price']}")
+                                    st.caption(f"Category: {product['category']}")
+                                    
+                                    with st.expander("View Details"):
+                                        st.write(product['description'])
+                                        st.write(f"**Tags:** {', '.join(product['tags'])}")
 
 # Chat input
 if prompt := st.chat_input("Ask me anything about products..."):
