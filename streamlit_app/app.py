@@ -35,9 +35,9 @@ import base64
 from PIL import Image
 import io
 import json
+import os
 
-API_URL = "http://localhost:8000/api/chat"
-STREAM_URL = "http://localhost:8000/api/chat/stream"
+STREAM_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 st.set_page_config(
     page_title="ShopBot",

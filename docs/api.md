@@ -4,7 +4,7 @@
 
 The AI Commerce Agent API provides intelligent product discovery and recommendation services via LLM chatting and image-based search capabilities.
 
-**Base URL:** `http://localhost:8000`
+**Base URL:** `https://palona-commerce-agent.streamlit.app/`
 
 ## Authentication
 
