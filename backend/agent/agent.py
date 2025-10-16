@@ -181,7 +181,7 @@ class CommerceAgent:
 
         return final_response.choices[0].message.content, products, tool_used
 
-    def _chat_stream(
+    def chat_stream(
         self,
         message: str,
         history: List[ChatMessage] = [],

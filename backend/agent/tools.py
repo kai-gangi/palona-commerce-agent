@@ -79,12 +79,6 @@ def search_products_by_image(image_base64: str, n_results: int = 5) -> List[Dict
     products = vector_store.search_image(query_embedding, n_results)
     return products
 
-def get_general_response() -> str:
-  """
-  Indicate that no special tool is needed, just general conversation
-  """
-  return "general_conversation"
-
 TOOLS = [
     {
         "type": "function",

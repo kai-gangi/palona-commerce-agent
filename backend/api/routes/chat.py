@@ -70,7 +70,7 @@ async def chat_stream(request: ChatRequest):
     try:
         def generate():
             try:
-                for chunk in agent._chat_stream(
+                for chunk in agent.chat_stream(
                     message=request.message,
                     history=request.history,
                     image_base64=request.image
